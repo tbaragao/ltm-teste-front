@@ -1,4 +1,4 @@
-﻿import { Http, RequestOptions, Response, Headers, URLSearchParams } from '@angular/http';
+import { Http, RequestOptions, Response, Headers, URLSearchParams } from '@angular/http';
 import { Router } from '@angular/router';
 import { Inject, Injectable, OnInit } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
@@ -29,7 +29,7 @@ export class ApiService<T> {
 
     }
 
-    public uploadCustom(formData: FormData, folder: string, url?: string): Observable<T> {
+    public uploadCustom(formData: FormData, folder: string, url?: string): Observable<any> {
 
 
         let _url = url || this.makeBaseUrl();
@@ -54,7 +54,7 @@ export class ApiService<T> {
             });
     }
 
-    public upload(file: File, folder: string, rename: boolean): Observable<T> {
+    public upload(file: File, folder: string, rename: boolean): Observable<any> {
 
         let formData: FormData = new FormData();
         formData.append('files', file, file.name);
@@ -67,7 +67,7 @@ export class ApiService<T> {
 
     }
 
-    public deleteUpload(folder: string, fileName: string): Observable<T> {
+    public deleteUpload(folder: string, fileName: string): Observable<any> {
 
 
         let url = this.makeResourceDeleteUpload(folder, fileName);
@@ -87,7 +87,7 @@ export class ApiService<T> {
             });
     }
 
-    public post(data: any): Observable<T> {
+    public post(data: any): Observable<any> {
 
         let url = this.makeBaseUrl();
         this.loading(url, true);
@@ -107,7 +107,7 @@ export class ApiService<T> {
             });
     }
 
-    public delete(data: any): Observable<T> {
+    public delete(data: any): Observable<any> {
 
 
         let url = this.makeBaseUrl();
@@ -129,7 +129,7 @@ export class ApiService<T> {
             });
     }
 
-    public put(data: any): Observable<T> {
+    public put(data: any): Observable<any> {
 
         let url = this.makeBaseUrl();
         this.loading(url, true);
@@ -149,7 +149,7 @@ export class ApiService<T> {
             });
     }
 
-    public export(filters?: any): Observable<T> {
+    public export(filters?: any): Observable<any> {
 
         if (filters == null) filters = {};
         filters.FilterBehavior = 'Export';
@@ -303,7 +303,7 @@ export class ApiService<T> {
         return params;
     }
 
-    private getBase(url: string, filters?: any, onlyDataResult?: boolean): Observable<T> {
+    private getBase(url: string, filters?: any, onlyDataResult?: boolean): Observable<any> {
 
         if (filters != null && filters.id != null) {
             url += '/' + filters.id;

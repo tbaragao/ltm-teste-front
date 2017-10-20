@@ -1,4 +1,4 @@
-﻿import { Injectable, EventEmitter } from '@angular/core'
+import { Injectable, EventEmitter } from '@angular/core'
 import { Routes } from '@angular/router';
 import { CacheService } from 'app/common/services/cache.service';
 import { ECacheType } from 'app/common/type-cache.enum';
@@ -137,8 +137,8 @@ export class AuthSettings {
 
     constructor() {
         this.TYPE_LOGIN = "SSO";
-        this.CLIENT_ID = 'Target-spa';
-        this.SCOPE = 'ssosa';
+        this.CLIENT_ID = 'ltmteste-spa';
+        this.SCOPE = 'ltmteste';
     }
 };
 
