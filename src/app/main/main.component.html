@@ -1,24 +1,31 @@
-﻿<div [ngClass]="{'gc-container--closed': !menuIsOpen}" class="gc-container gc--menu-fixed"  data-mockup="size-container">
+﻿<div [ngClass]="{'gc-container--closed': !menuIsOpen}" class="gc-container gc--menu-fixed" data-mockup="size-container">
   <div class="gc-menu">
     <div class="gc-menu__header">
       <div class="gc-menu__header__brand">
-        <a href="/"><img src="../../assets/img/logo.png" alt="Target Software" /></a>
+        <a href="/">
+          <img src="../../assets/img/logo.png" alt="LTM" />
+        </a>
       </div>
       <div class="gc-profile">
         <div class="gc-profile__avatar">
-          <div [ngStyle]="{'background-image': san(vm.avatar), 'width': '90px', 'height': '90px','background-size': 'cover','background-position': 'center','border-radius': '50%' }" *ngIf="vm.avatar != null"></div>
+          <div [ngStyle]="{'background-image': san(vm.avatar), 'width': '90px', 'height': '90px','background-size': 'cover','background-position': 'center','border-radius': '50%' }"
+            *ngIf="vm.avatar != null"></div>
         </div>
         <div class="gc-profile__title">
-          <h3 class="gc-profile__name"><b>{{vm.userName}}</b></h3>
-          <p class="gc-profile__infos"><span class="badge badge-pill badge-default">{{vm.userRole}}</span></p>
+          <h3 class="gc-profile__name">
+            <b>{{vm.userName}}</b>
+          </h3>
+          <p class="gc-profile__infos">
+            <span class="badge badge-pill badge-default">{{vm.userRole}}</span>
+          </p>
         </div>
       </div>
     </div>
     <ul class="gc-menu__list list-unstyled">
       <li *ngFor="let item of vm.menu">
-        <a routerLink="{{item.Value}}">
-          <span class="gc-menu__list__icon fa fa-edit"></span>
-          <span class="gc-menu__list__text">{{item.Name}}</span>
+        <a routerLink="{{item.value}}">
+          <span class="gc-menu__list__icon fa {{item.icon}}"></span>
+          <span class="gc-menu__list__text">{{item.name}}</span>
         </a>
       </li>
     </ul>
@@ -31,17 +38,11 @@
           <span class="fa fa-bars" aria-hidden="true"></span>
         </button>
 
-        <a class="navbar-brand p-2" href="/"><img src="../../assets/img/logo.png" alt="Target Software"></a>
-
-        <div class="form-inline p-2">
-          <input class="form-control mr-sm-2" type="text" placeholder="Procurar tarefa" [(ngModel)]="filter">
-          <button class="btn btn-outline-success my-2 my-sm-0" type="submit" (click)="onFilter(filter)">Buscar</button>
-        </div>
         <ul class="navbar-nav ml-auto p-2">
           <li class="nav-item">
-            <a class="nav-link" href="#" title="Sair" (click)="onLogout($event)"><span class="fa fa-sign-out" aria-hidden="true"></span> Sair</a>
+            <a class="nav-link" href="#" title="Sair" (click)="onLogout($event)">
+              <span class="fa fa-sign-out" aria-hidden="true"></span> Sair</a>
           </li>
-     
         </ul>
       </nav>
     </div>
@@ -53,12 +54,12 @@
       <div class="container-fluid">
         <div class="row">
           <div class="col">
-            Copyright ©Target Software 2017. Todos os direitos reservados.
+            Copyright ©LTM Teste 2017. Todos os direitos reservados.
           </div>
         </div>
       </div>
     </div>
   </div>
 
- 
+
 </div>
