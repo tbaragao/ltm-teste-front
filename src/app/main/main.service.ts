@@ -60,6 +60,7 @@ export class MainService extends ServiceBase {
             imprimir: { label: 'Imprimir' },
             procurar: { label: 'Procurar' },
             excluir: { label: 'Excluir' },
+            exportar: { label: 'Exportar' },
             grid: { label: 'Resultados' },
         }
     }
