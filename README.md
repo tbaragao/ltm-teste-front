@@ -41,3 +41,21 @@ Segurança no front está baseada no `AuthGuard` e sessão armazeada em *cookie*
 A estrutura já está preparada (faltando alguns ajustes) para trabalhar com multi-idioma.
 
 > **Notas** A arquitetura do projeto e novas funcionalidade estão sendo desenvolvidas e utilizarei este projeto futuramente para estudo, testes e novas funcionalidades para aplicar em outros projetos.
+
+#### Versões utilizada no desenvolvimento
+    @angular/cli: 1.4.9
+    node: 6.11.3
+    os: win32 x64
+    @angular/animations: 4.4.6
+    @angular/common: 4.4.6
+    @angular/compiler: 4.4.6
+    @angular/core: 4.4.6
+    @angular/forms: 4.4.6
+    @angular/http: 4.4.6
+    @angular/platform-browser: 4.4.6
+    @angular/platform-browser-dynamic: 4.4.6
+    @angular/router: 4.4.6
+    @angular/cli: 1.4.9
+    @angular/compiler-cli: 4.4.6
+    @angular/language-service: 4.4.6
+    typescript: 2.3.4
