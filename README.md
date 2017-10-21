@@ -34,7 +34,10 @@ O projeto está dividido em seus componentes, sendo eles:
 	 - api service
 	 - auth
 	 - etc...
- - **main**, layout do administrativo com seus subcomponentes, neste caso está o *produto*.
+ - **main**, layout do administrativo com seus subcomponentes.
+  - Template
+  - Dashboard
+  - Produto  
  - **util**, componentes auxiliares específicos do projeto.
 
 Segurança no front está baseada no `AuthGuard` e sessão armazeada em *cookie*.
