@@ -42,6 +42,20 @@ A estrutura já está preparada (faltando alguns ajustes) para trabalhar com mul
 
 > **Notas** A arquitetura do projeto e novas funcionalidade estão sendo desenvolvidas e utilizarei este projeto futuramente para estudo, testes e novas funcionalidades para aplicar em outros projetos.
 
+#### Funcionalidades
+O SPA contém um estrutura de uma painel administrativo
+- Dashboard (vazio)
+- Produtos
+  - Filtros
+  - Listagem
+  - Exportar (*.xls)
+  - Criar
+  - Deletar
+  - Editar
+  - Detalhes
+  - Impressão
+- Login (sessão com duração de 60 segundos)
+
 #### Versões utilizada no desenvolvimento
     @angular/cli: 1.4.9
     node: 6.11.3
