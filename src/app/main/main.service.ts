@@ -28,10 +28,7 @@ export class MainService extends ServiceBase {
         var grupo = "Geral";
         return this.globalServiceCulture.getResource(grupo, culture, this.getInfosFields(), (culture, infosFields) => {
             return new Promise((resolve, reject) => {
-                var translated = new Translated([
-                    new TranslatedField("pt-BR", "Voltar", "pra traz"),
-                    new TranslatedField("pt-BR", "NovoItem", "Add")
-                ]);
+                var translated = new Translated([]);
                 return resolve(this.globalServiceCulture.setResource(grupo, translated.get(culture), infosFields));
             });
         });

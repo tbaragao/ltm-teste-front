@@ -43,7 +43,7 @@ export class AuthService {
     public loginSso() {
 
         this._reset();
-        
+
         this.startupService.load();
 
         let state = Date.now() + "" + Math.random();
@@ -106,7 +106,7 @@ export class AuthService {
         if (currentUser.isAuth)
             callback(currentUser, false);
         else {
-            this.api.setResource('CurrentUser').get(null, true).subscribe(data => {                
+            this.api.setResource('CurrentUser').get(null, true).subscribe(data => {
                 CacheService.add(this._nameCurrentUser, JSON.stringify(data.data), this._type);
                 callback(this.currentUser(), true);
             }, err => {
