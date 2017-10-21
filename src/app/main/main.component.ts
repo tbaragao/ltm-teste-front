@@ -25,7 +25,7 @@ export class MainComponent implements OnInit {
         this.vm.generalInfo = this.mainService.getInfosFields();
         this.vm.downloadUri = GlobalService.getEndPoints().DOWNLOAD;
         this.vm.avatar = null;
-        
+
         this.mainService.updateCulture(this.vm);
         GlobalService.getChangeCultureEmitter().subscribe((culture) => {
             this.mainService.updateCulture(this.vm, culture);
@@ -48,6 +48,11 @@ export class MainComponent implements OnInit {
         this.authService.getCurrentUser((result, firstTime) => {
 
             if (result.isAuth) {
+                console.log(result)
+                if (result.token != null) {
+                    this.vm.userToken = result.token
+                }
+
                 if (result.claims.name != null) {
                     this.vm.userName = result.claims.name
                 }
@@ -68,9 +73,31 @@ export class MainComponent implements OnInit {
                     this.vm.typerole = result.claims.typerole
                     this.vm.userRole = this.vm.userRole + "- [" + this.vm.typerole + "]";
                 }
-                
+
             }
         });
+    }
+
+    copyToken() {
+        var textArea = document.createElement("textarea");
+        textArea.style.position = 'fixed';
+        textArea.style.width = '2em';
+        textArea.style.height = '2em';
+        textArea.style.border = 'none';
+        textArea.style.outline = 'none';
+        textArea.style.boxShadow = 'none';
+        textArea.style.background = 'transparent';
+        textArea.value = "Bearer " + this.vm.userToken;
+        document.body.appendChild(textArea);
+        textArea.select();
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'successful' : 'unsuccessful';
+            console.log('Copying text command was ' + msg);
+        } catch (err) {
+            console.log('Oops, unable to copy');
+        }
+        document.body.removeChild(textArea);
     }
 
     onToggleMenu() {

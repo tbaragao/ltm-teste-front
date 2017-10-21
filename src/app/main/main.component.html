@@ -16,7 +16,8 @@
             <b>{{vm.userName}}</b>
           </h3>
           <p class="gc-profile__infos">
-            <span class="badge badge-pill badge-default">{{vm.userRole}}</span>
+            <span class="badge badge-pill badge-default" title="Clique para copiar seu token" (click)="copyToken()">{{vm.userRole}} <i class="fa fa-key"></i></span>
+            <input type="hidden" [(ngModel)]='vm.userToken' id="userToken" />
           </p>
         </div>
       </div>

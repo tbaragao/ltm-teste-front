@@ -106,7 +106,7 @@ export class AuthService {
         if (currentUser.isAuth)
             callback(currentUser, false);
         else {
-            this.api.setResource('CurrentUser').get(null, true).subscribe(data => {
+            this.api.setResource('CurrentUser').get(null, true).subscribe(data => {                
                 CacheService.add(this._nameCurrentUser, JSON.stringify(data.data), this._type);
                 callback(this.currentUser(), true);
             }, err => {
@@ -119,7 +119,8 @@ export class AuthService {
         var currentUser = CacheService.get(this._nameCurrentUser, this._type);
         return {
             isAuth: currentUser ? true : false,
-            claims: JSON.parse(currentUser)
+            claims: JSON.parse(currentUser),
+            token: CacheService.get('ACCESS_TOKEN', ECacheType.COOKIE)
         }
     }
 
