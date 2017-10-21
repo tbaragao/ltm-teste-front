@@ -37,7 +37,7 @@ O projeto está dividido em seus componentes, sendo eles:
  - **main**, layout do administrativo com seus subcomponentes, neste caso está o *produto*.
  - **util**, componentes auxiliares específicos do projeto.
 
-Segurança está baseada no `RouterGuard` e sessão armazeada em *cookie*.
+Segurança no front está baseada no `AuthGuard` e sessão armazeada em *cookie*.
 A estrutura já está preparada (faltando alguns ajustes) para trabalhar com multi-idioma.
 
 > **Notas** A arquitetura do projeto e novas funcionalidade estão sendo desenvolvidas e utilizarei este projeto futuramente para estudo, testes e novas funcionalidades para aplicar em outros projetos.
