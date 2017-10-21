@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { GlobalService } from '../../global.service';
 
@@ -6,7 +6,7 @@ import { GlobalService } from '../../global.service';
     selector: 'confirm-modal',
     template: `
               <div bsModal #_confirmModal="bs-modal" class="gc-modal modal fade" >
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-sm">
                   <div class="modal-content">
                     <div class="modal-header">
                       <h3 class="modal-title">Confirmação</h3>
@@ -46,7 +46,7 @@ export class ConfirmModalComponent implements OnInit {
 
     constructor() {
         this.vm = {};
-        this.vm.messageConfirmation = "tem certeza que deseja Executar Essa operação?"
+        this.vm.messageConfirmation = "Tem certeza que deseja executar essa operação?"
     }
 
 

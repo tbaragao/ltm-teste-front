@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, Output, EventEmitter, ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormsModule, FormGroup, FormControl} from '@angular/forms';
+import { FormsModule, FormGroup, FormControl } from '@angular/forms';
 
 import { ModalDirective } from 'ngx-bootstrap/modal';
 import { ProdutoService } from './produto.service';
 import { ViewModel } from 'app/common/model/viewmodel';
-import { GlobalService, NotificationParameters} from '../../global.service';
+import { GlobalService, NotificationParameters } from '../../global.service';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class ProdutoComponent implements OnInit {
     @ViewChild('saveModal') private saveModal: ModalDirective;
     @ViewChild('editModal') private editModal: ModalDirective;
     @ViewChild('detailsModal') private detailsModal: ModalDirective;
-	
+
     constructor(private produtoService: ProdutoService, private router: Router, private ref: ChangeDetectorRef) {
 
         this.vm = null;
@@ -30,23 +30,22 @@ export class ProdutoComponent implements OnInit {
 
     ngOnInit() {
 
-		this.vm = this.produtoService.initVM();
-		this.produtoService.detectChanges(this.ref);
+        this.vm = this.produtoService.initVM();
+        this.produtoService.detectChanges(this.ref);
+        this.updateCulture();
 
         this.produtoService.get().subscribe((result) => {
             this.vm.filterResult = result.dataList;
             this.vm.summary = result.summary;
         });
 
-		this.updateCulture();
         GlobalService.getChangeCultureEmitter().subscribe((culture) => {
             this.updateCulture(culture);
         });
 
     }
 
-	updateCulture(culture: string = null)
-    {
+    updateCulture(culture: string = null) {
         this.produtoService.updateCulture(culture).then(infos => {
             this.vm.infos = infos;
             this.vm.grid = this.produtoService.getInfoGrid(infos);
@@ -55,7 +54,6 @@ export class ProdutoComponent implements OnInit {
 
 
     public onFilter(modelFilter) {
-
         this.produtoService.get(modelFilter).subscribe((result) => {
             this.vm.filterResult = result.dataList;
             this.vm.summary = result.summary;
@@ -72,64 +70,49 @@ export class ProdutoComponent implements OnInit {
         })
     }
 
-	public onCreate() {
-
+    public onCreate() {
         this.vm.model = {};
         this.saveModal.show();
-		GlobalService.getNotificationEmitter().emit(new NotificationParameters("create", {
+        GlobalService.getNotificationEmitter().emit(new NotificationParameters("create", {
             model: this.vm.model
         }));
     }
 
     public onEdit(model) {
-
         this.editModal.show();
-        this.produtoService.get(model).subscribe((result) => {
-            this.vm.model = result.dataList[0];
-			 GlobalService.getNotificationEmitter().emit(new NotificationParameters("edit", {
+        this.produtoService.get({ id: model.produtoId }).subscribe((result) => {
+            this.vm.model = result.data;
+            GlobalService.getNotificationEmitter().emit(new NotificationParameters("edit", {
                 model: this.vm.model
             }));
         })
-
     }
 
     public onSave(model) {
-
         this.produtoService.save(model).subscribe((result) => {
-
-            this.vm.filterResult = this.vm.filterResult.filter(function (model) {
-                return  model.produtoId != result.data.produtoId;
-            });
-
-            this.vm.filterResult.push(result.data);
-            this.vm.summary.total = this.vm.filterResult.length
-
-			if (!this.vm.manterTelaAberta) {
+            this.onFilter(this.vm.modelFilter);
+            if (!this.vm.manterTelaAberta) {
                 this.saveModal.hide();
                 this.editModal.hide();
             }
-
         });
 
     }
 
     public onDetails(model) {
-
         this.detailsModal.show();
-        this.produtoService.get(model).subscribe((result) => {
-            this.vm.details = result.dataList[0];
+        this.produtoService.get({ id: model.produtoId }).subscribe((result) => {
+            this.vm.details = result.data;
         })
-
     }
 
     public onCancel() {
-
         this.saveModal.hide();
         this.editModal.hide();
         this.detailsModal.hide();
     }
 
-	onClearFilter() {
+    onClearFilter() {
         this.vm.modelFilter = {};
     }
 
@@ -138,21 +121,14 @@ export class ProdutoComponent implements OnInit {
     }
 
     public onDeleteConfimation(model) {
-
-
-
         var conf = GlobalService.operationExecutedParameters(
             "confirm-modal",
             () => {
                 this.produtoService.delete(model).subscribe((result) => {
-                    this.vm.filterResult = this.vm.filterResult.filter(function (model) {
-                        return  model.produtoId != result.data.produtoId;
-                    });
-                    this.vm.summary.total = this.vm.filterResult.length
+                    this.onFilter(this.vm.modelFilter);
                 });
             }
         );
-
         GlobalService.getOperationExecutedEmitter().emit(conf);
     }
 
@@ -161,7 +137,6 @@ export class ProdutoComponent implements OnInit {
     }
 
     public onPageChanged(pageConfig) {
-
         let modelFilter = this.produtoService.pagingConfig(this.vm.modelFilter, pageConfig);
         this.produtoService.get(modelFilter).subscribe((result) => {
             this.vm.filterResult = result.dataList;
@@ -170,7 +145,6 @@ export class ProdutoComponent implements OnInit {
     }
 
     public onOrderBy(order) {
-
         let modelFilter = this.produtoService.orderByConfig(this.vm.modelFilter, order);
         this.produtoService.get(modelFilter).subscribe((result) => {
             this.vm.filterResult = result.dataList;

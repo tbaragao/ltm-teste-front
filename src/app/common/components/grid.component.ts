@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 import { GlobalService } from 'app/global.service';
 import { ViewModel } from '../model/viewmodel';
@@ -39,10 +39,10 @@ import { ViewModel } from '../model/viewmodel';
                 <button (click)="onEdit($event, item)" *ngIf="showEdit" placement="top" title="Editar" class="btn btn-sm btn-primary">
                   <i class="fa fa-pencil"></i>
                 </button>
-                <button (click)="onDetails($event, item)" *ngIf="showDetails" placement="top" title="Detalhes" class="btn btn-sm">
-                  <i class="fa fa-table"></i>
+                <button (click)="onDetails($event, item)" *ngIf="showDetails" placement="top" title="Detalhes" class="btn btn-sm btn-success">
+                  <i class="fa fa-search"></i>
                 </button>
-                <button (click)="onPrint($event, item)" *ngIf="showPrint" placement="top" title="Imprimir" class="btn btn-sm btn-success">
+                <button (click)="onPrint($event, item)" *ngIf="showPrint" placement="top" title="Imprimir" class="btn btn-sm btn-default">
                   <i class="fa fa-print"></i>
                 </button>
                 <button (click)="onDeleteConfimation($event, item)" *ngIf="showDelete" placement="top" title="Excluir" class="btn btn-sm btn-danger">

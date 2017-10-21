@@ -1,26 +1,21 @@
 <dl>
-    <dt>{{ vm.infos.nome.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.nome" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
- 
 
-    <dt>{{ vm.infos.descricao.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.descricao" [format]="'string'" [tag]="'span'" ></bind-custom></dd>
- 
+  <dt>{{ vm.infos.produtoId.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.produtoId" [format]="'int'" [tag]="'span'"></bind-custom></dd>
 
-    <dt>{{ vm.infos.produtoId.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.produtoId" [format]="'int'" [tag]="'span'" ></bind-custom></dd>
- 
+  <dt>{{ vm.infos.nome.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.nome" [format]="'string'" [tag]="'span'"></bind-custom></dd>
 
-    <dt>{{ vm.infos.qtdeMinima.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.qtdeMinima" [format]="'decimal'" [tag]="'span'" ></bind-custom></dd>
- 
+  <dt>{{ vm.infos.descricao.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.descricao" [format]="'string'" [tag]="'span'"></bind-custom></dd>
 
-    <dt>{{ vm.infos.valor.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.valor" [format]="'decimal'" [tag]="'span'" ></bind-custom></dd>
- 
+  <dt>{{ vm.infos.qtdeMinima.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.qtdeMinima" [format]="'decimal'" [tag]="'span'"></bind-custom></dd>
 
-    <dt>{{ vm.infos.ativo.label }}:</dt>
-    <dd><bind-custom [model]="vm.details.ativo" [format]="'bool'" [tag]="'span'" ></bind-custom></dd>
- 
+  <dt>{{ vm.infos.valor.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.valor" [format]="'decimal'" [tag]="'span'"></bind-custom></dd>
+
+  <dt>{{ vm.infos.ativo.label }}:</dt>
+  <dd><bind-custom [model]="vm.details.ativo" [format]="'bool'" [tag]="'span'"></bind-custom></dd>
 
 </dl> 

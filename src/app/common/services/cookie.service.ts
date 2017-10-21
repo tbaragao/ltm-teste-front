@@ -1,30 +1,42 @@
-﻿import { Injectable } from '@angular/core';
-import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CookieService {
 
     public static get(key: string) {
-        return Cookie.get(key);
+        var _name = key + "=";
+        var ca = document.cookie.split(';');
+        for (var i = 0; i < ca.length; i++) {
+            var c = ca[i];
+            while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+            if (c.indexOf(_name) == 0) return c.substring(_name.length, c.length);
+        }
+        return null;
     }
 
-    public static add(key: string, data: any, expiresTime?: number) {
-        Cookie.set(key, data, expiresTime);
+    public static add(key: string, data: any, seconds?: number) {
+        if (seconds) {
+            var date = new Date();
+            date.setTime(date.getTime() + (seconds * 1000));
+            var expires = "; expires=" + date.toUTCString();
+        } else var expires = "";
+        document.cookie = key + "=" + data + expires + "; path=/";
     }
 
-    public static update(key: string, data: any) {
-        Cookie.delete(key);
-        Cookie.set(key, data);
+    public static update(key: string, data: any, seconds?: number) {
+        this.remove(key);
+        this.add(key, data, seconds);
     }
 
     public static remove(key: string) {
-        Cookie.delete(key);
+        this.add(key, "", -1);
     }
 
     public static reset() {
-        Cookie.delete("CURRENT_USER");
-        Cookie.delete("TOKEN_AUTH");
-        Cookie.delete("ARRAffinity");
+        this.remove("CURRENT_USER");
+        this.remove("TOKEN_AUTH");
+        this.remove("ACCESS_TOKEN");
+        this.remove("ARRAffinity");
     }
 
     public static clearAllCookies() {

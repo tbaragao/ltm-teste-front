@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Router, NavigationCancel } from '@angular/router';
 import { URLSearchParams, } from '@angular/http';
 
@@ -12,9 +12,8 @@ import { StartupService } from 'app/startup.service';
 @Injectable()
 export class AuthService {
 
-
-
     private readonly _nameToken: string;
+    private readonly _accessToken: string;
     private readonly _nameEndPointAuthApi: string;
     private readonly _typeLogin: string;
     private readonly _authorizationUrl: string;
@@ -25,56 +24,30 @@ export class AuthService {
     private readonly _nameCurrentUser: string;
     private readonly _type: ECacheType;
 
-    constructor(private apiAuth: ApiService<any>, private api: ApiService<any>, private router: Router, private startupService : StartupService) {
-
-
+    constructor(private apiAuth: ApiService<any>, private api: ApiService<any>, private router: Router, private startupService: StartupService) {
 
         this._nameToken = "TOKEN_AUTH";
+        this._accessToken = "ACCESS_TOKEN";
         this._nameEndPointAuthApi = "AUTHAPI";
         this._typeLogin = GlobalService.getAuthSettings().TYPE_LOGIN;
-        this._authorizationUrl = GlobalService.getEndPoints().AUTH + '/connect/authorize';
+        this._authorizationUrl = GlobalService.getEndPoints().AUTH + 'connect/authorize';
         this._client_id = GlobalService.getAuthSettings().CLIENT_ID;
         this._redirect_uri = GlobalService.getEndPoints().APP;
-        this._response_type = "token";
+        this._response_type = "id_token token";
         this._scope = GlobalService.getAuthSettings().SCOPE;
         this._nameCurrentUser = "CURRENT_USER";
         this._type = ECacheType.COOKIE;
 
-
-    }
-
-    public loginResourceOwner(email, password, reload = false) {
-
-        this.apiAuth.setResource("auth", GlobalService.getEndPoints().AUTHAPI).post({
-
-            ClientId: this._client_id,
-            ClientSecret: "******",
-            Scope: "openid profile ssosm",
-            User: email,
-            Password: password
-
-        }).subscribe(data => {
-
-            CacheService.add(this._nameToken, data.Data.Token, this._type);
-            this.router.navigate(["/home"]);
-
-            if (reload)
-                window.location.reload();
-
-        }, err => { });
-
-        this._typeLogin;
     }
 
     public loginSso() {
 
-
+        this._reset();
+        
         this.startupService.load();
 
         let state = Date.now() + "" + Math.random();
         localStorage["state"] = state;
-
-        console.log("<<<<<< loginSso >>>>>", state, localStorage["state"]);
 
         var url =
             this._authorizationUrl + "?" +
@@ -82,30 +55,24 @@ export class AuthService {
             "redirect_uri=" + encodeURI(this._redirect_uri) + "&" +
             "response_type=" + encodeURI(this._response_type) + "&" +
             "scope=" + encodeURI(this._scope) + "&" +
-            "state=" + encodeURI(state);
+            "state=" + encodeURI(state) + "&" +
+            "nonce=xyz";
 
-        window.location.href = url;
-        return this._typeLogin;
-
-    }
-
-    public getTypeLogin() {
-        return this._typeLogin;
+        setTimeout(() => { window.location.href = url; }, 500)
     }
 
     public logout() {
+        var conf = GlobalService.operationExecutedParameters(
+            "confirm-modal",
+            () => {
+                this._reset();
+                var authorizationUrl = GlobalService.getEndPoints().AUTH + 'account/logout?returnUrl=' + GlobalService.getEndPoints().APP;
+                window.location.href = authorizationUrl;
+            },
+            "Tem certeza que deseja sair do sistema?"
+        );
 
-        console.log("logout", this._typeLogin);
-        this._reset();
-         
-        if (this._typeLogin == "SSO") {
-            var authorizationUrl = GlobalService.getEndPoints().AUTH + 'account/logout?returnUrl=' + GlobalService.getEndPoints().APP;
-            console.log(authorizationUrl);
-            window.location.href = authorizationUrl;
-        }
-        else {
-            this.router.navigate(["/login"]);
-        }
+        GlobalService.operationExecuted.emit(conf);
     }
 
     public processTokenCallback() {
@@ -120,19 +87,14 @@ export class AuthService {
                 return result;
             }, {}) as any;
 
-
             if (!result.error) {
                 if (result.state !== localStorage["state"]) {
-                    console.log("<<<<< INVALID STATE >>>>>>", result.state, localStorage["state"]);
                     localStorage.removeItem("state");
                     this.router.navigate(["/login"]);
                 }
                 else {
-                    console.log("<<<<< VALID STATE >>>>>>", result.state, localStorage["state"]);
-                    console.log("<<<<< TOKEN >>>>>>", result.access_token);
-                    console.log("<<<<< ENDPOINTS >>>>>>", GlobalService.getEndPoints());
                     localStorage.removeItem("state");
-                    this._acceptlogin(result.access_token, false)
+                    this._acceptlogin(result, false)
                 }
             }
         }
@@ -140,12 +102,11 @@ export class AuthService {
     }
 
     public getCurrentUser(callback) {
-
         var currentUser = this.currentUser();
         if (currentUser.isAuth)
             callback(currentUser, false);
         else {
-            this.api.setResource('CurrentUser').get().subscribe(data => {
+            this.api.setResource('CurrentUser').get(null, true).subscribe(data => {
                 CacheService.add(this._nameCurrentUser, JSON.stringify(data.data), this._type);
                 callback(this.currentUser(), true);
             }, err => {
@@ -167,15 +128,11 @@ export class AuthService {
         return token !== null;
     }
 
-    private _acceptlogin(token, reload) {
-
-        console.log("<<<<<<< _acceptlogin >>>>>>>>>>", token)
-        CacheService.add(this._nameToken, token, this._type);
-
+    private _acceptlogin(result, reload) {
+        CacheService.add(this._nameToken, result.id_token, this._type, result.expires_in);
+        CacheService.add(this._accessToken, result.access_token, this._type, result.expires_in);
         this.router.navigate(["/home"]);
-
-        if (reload)
-            window.location.reload();
+        if (reload) window.location.reload();
     }
 
     private _reset() {
@@ -183,10 +140,7 @@ export class AuthService {
     }
 
     private makeUrl(url, noCache = false) {
-
-        if (noCache)
-            return url;
-
+        if (noCache) return url;
         return url + '?v=' + Math.random();
     }
 

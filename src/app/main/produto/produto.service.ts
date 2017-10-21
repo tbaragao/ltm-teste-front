@@ -7,24 +7,29 @@ import { ApiService } from 'app/common/services/api.service';
 import { ServiceBase } from 'app/common/services/service.base';
 import { ViewModel } from 'app/common/model/viewmodel';
 import { GlobalService } from '../../global.service';
-import { ProdutoServiceFields } from './produto.service.fields';
 import { GlobalServiceCulture, Translated, TranslatedField } from '../../global.service.culture';
 import { MainService } from '../main.service';
 
 @Injectable()
 export class ProdutoService extends ServiceBase {
 
-	private _form : FormGroup;
+    private _form: FormGroup;
 
-    constructor(private api: ApiService<any>,private serviceFields: ProdutoServiceFields, private globalServiceCulture: GlobalServiceCulture, private mainService: MainService) {
-
-		super();
-		this._form = this.serviceFields.getFormFields();
-
+    constructor(private api: ApiService<any>,
+        private globalServiceCulture: GlobalServiceCulture,
+        private mainService: MainService) {
+        super();
+        this._form = new FormGroup({
+            nome: new FormControl(),
+            descricao: new FormControl(),
+            produtoId: new FormControl(),
+            qtdeMinima: new FormControl(),
+            valor: new FormControl(),
+            ativo: new FormControl(),
+        });
     }
 
     initVM(): ViewModel<any> {
-
         return new ViewModel({
             mostrarFiltros: false,
             actionTitle: " Produto",
@@ -34,20 +39,27 @@ export class ProdutoService extends ServiceBase {
             modelFilter: {},
             summary: {},
             model: {},
-	    	details: {},
+            details: {},
             infos: this.getInfos(),
             grid: this.getInfoGrid(this.getInfos()),
-			generalInfo: this.mainService.getInfos(),
+            generalInfo: this.mainService.getInfos(),
             form: this._form,
             masks: this.masksConfig()
         });
     }
 
-	getInfos() {
-		return this.serviceFields.getInfosFields();
+    getInfos() {
+        return {
+            produtoId: { label: '#', type: 'int', isKey: true, list: true },
+            nome: { label: 'Nome', type: 'string', isKey: false, list: true },
+            descricao: { label: 'Descrição', type: 'string', isKey: false, list: false },
+            qtdeMinima: { label: 'Qtde. Mínima', type: 'decimal', isKey: false, list: true },
+            valor: { label: 'Valor', type: 'decimal', isKey: false, list: true },
+            ativo: { label: 'Ativo', type: 'bool', isKey: false, list: true },
+        };
     }
 
-	getInfoGrid(infos : any) {
+    getInfoGrid(infos: any) {
         return super.getInfoGrid(infos)
     }
 
@@ -73,31 +85,26 @@ export class ProdutoService extends ServiceBase {
         return this.api.setResource('Produto').get(filters);
     }
 
-	getDataCustom(filters?: any): Observable<any> {
+    getDataCustom(filters?: any): Observable<any> {
         return this.api.setResource('Produto').getDataCustom(filters);
     }
 
-	getDataListCustom(filters?: any): Observable<any> {
+    getDataListCustom(filters?: any): Observable<any> {
         return this.api.setResource('Produto').getDataListCustom(filters);
     }
 
     save(model: any): Observable<any> {
-
-        if ( model.produtoId != undefined) {
+        if (model.produtoId != undefined)
             return this.api.setResource('Produto').put(model);
-        }
 
         return this.api.setResource('Produto').post(model);
     }
 
     delete(model: any): Observable<any> {
-
         return this.api.setResource('Produto').delete(model);
-
     }
-    
-    export(filters?: any): Observable<any>
-    {
+
+    export(filters?: any): Observable<any> {
         return this.api.setResource('Produto').export(filters);
     }
 }

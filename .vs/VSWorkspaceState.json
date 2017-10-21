@@ -1,13 +1,22 @@
 {
   "ExpandedNodes": [
     "",
-    "\\e2e",
     "\\src",
     "\\src\\app",
     "\\src\\app\\common",
-    "\\src\\app\\common\\services",
-    "\\src\\environments"
+    "\\src\\app\\common\\components",
+    "\\src\\app\\main",
+    "\\src\\app\\main\\produto",
+    "\\src\\app\\main\\produto\\produto-field-create",
+    "\\src\\app\\main\\produto\\produto-field-details",
+    "\\src\\app\\main\\produto\\produto-field-edit",
+    "\\src\\app\\main\\produto\\produto-field-filter",
+    "\\src\\app\\main\\produto\\produto-print",
+    "\\src\\assets",
+    "\\src\\assets\\css",
+    "\\src\\assets\\css\\skins",
+    "\\src\\assets\\css\\skins\\lightgray"
   ],
-  "SelectedNode": "\\src\\app\\app.module.ts",
+  "SelectedNode": "\\src\\app\\common\\services\\api.service.ts",
   "PreviewInSolutionExplorer": false
 }

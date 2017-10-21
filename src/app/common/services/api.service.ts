@@ -23,9 +23,8 @@ export class ApiService<T> {
         this._enableLoading = true;
     }
 
-    public get(filters?: any, onlyDataResult?: boolean): Observable<T> {
-
-        return this.getBase(this.makeBaseUrl(), filters);
+    public get(filters?: any, notAuthorizeFromServer: boolean = false): Observable<T> {
+        return this.getBase(this.makeBaseUrl(), filters, notAuthorizeFromServer)
 
     }
 
@@ -36,7 +35,7 @@ export class ApiService<T> {
 
         this.loading(_url, true);
         let headers = new Headers();
-        headers.append('Authorization', "Bearer " + CacheService.get('TOKEN_AUTH', ECacheType.COOKIE))
+        headers.append('Authorization', "Bearer " + CacheService.get('ACCESS_TOKEN', ECacheType.COOKIE))
         let options = new RequestOptions({ headers: headers });
 
         return this.http.post(_url,
@@ -238,10 +237,12 @@ export class ApiService<T> {
         return this._resource;
     }
 
-    public requestOptions(): RequestOptions {
+    public requestOptions(notAuthorizeFromServer?: boolean): RequestOptions {
+
         const headers = new Headers({
             'Content-Type': 'application/json',
-            'Authorization': "Bearer " + CacheService.get('TOKEN_AUTH', ECacheType.COOKIE)
+            'Authorization': "Bearer " + CacheService.get('ACCESS_TOKEN', ECacheType.COOKIE),
+            'NotAuthorizeFromServer': notAuthorizeFromServer ? true : false
         });
 
         return new RequestOptions({ headers: headers });
@@ -303,7 +304,7 @@ export class ApiService<T> {
         return params;
     }
 
-    private getBase(url: string, filters?: any, onlyDataResult?: boolean): Observable<any> {
+    private getBase(url: string, filters?: any, notAuthorizeFromServer: boolean = false): Observable<any> {
 
         if (filters != null && filters.id != null) {
             url += '/' + filters.id;
@@ -312,7 +313,7 @@ export class ApiService<T> {
         this.loading(url, true);
 
         return this.http.get(url,
-            this.requestOptions().merge(new RequestOptions({
+            this.requestOptions(notAuthorizeFromServer).merge(new RequestOptions({
                 search: this.makeSearchParams(filters)
             })))
             .map(res => {
@@ -335,8 +336,20 @@ export class ApiService<T> {
 
     private errorResult(response: Response): Observable<T> {
 
-        if (response.status == 401 || response.status == 403)
-            this.router.navigate(["/login"]);
+        if (response.status == 401 || response.status == 403) {
+            this.notificationsService.error(
+                'Sua sessão expirou',
+                "Aguarde, você será redirecionado",
+                {
+                    timeOut: 5000,
+                    showProgressBar: true,
+                    pauseOnHover: false,
+                    clickToClose: false,
+                }
+            )
+
+            setTimeout(() => { this.router.navigate(["/login"]); }, 3000)
+        }
 
         let _response = response.json();
         let erros = "ocorreu um erro!";

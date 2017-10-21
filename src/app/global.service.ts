@@ -138,7 +138,7 @@ export class AuthSettings {
     constructor() {
         this.TYPE_LOGIN = "SSO";
         this.CLIENT_ID = 'ltmteste-spa';
-        this.SCOPE = 'ltmteste';
+        this.SCOPE = 'openid ltmteste profile email';
     }
 };
 

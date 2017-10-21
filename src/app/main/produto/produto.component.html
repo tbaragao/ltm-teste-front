@@ -39,15 +39,15 @@
           <div class="card gc-card card-primary">
             <div class="card-header">{{vm.generalInfo.filtro.label}}</div>
             <div class="card-block">
-              <app-produto-container-filter [(vm)]="vm"></app-produto-container-filter>
+              <app-produto-field-filter [(vm)]="vm"></app-produto-field-filter>
             </div>
             <div class="card-footer d-flex justify-content-end">
               <button class="btn btn-success" type="submit">
                 <span class="fa fa-search"></span>
                 {{vm.generalInfo.filtrar.label}}
               </button>
-			  <button class="btn btn-primary" type="button" (click)="vm.mostrarFiltros =! vm.mostrarFiltros">Fechar</button>
-			  <button class="btn btn-default" type="button" (click)="onClearFilter()">Limpar</button>
+              <button class="btn btn-primary" type="button" (click)="vm.mostrarFiltros =! vm.mostrarFiltros">Fechar</button>
+              <button class="btn btn-default" type="button" (click)="onClearFilter()">Limpar</button>
             </div>
           </div>
         </form>
@@ -58,10 +58,9 @@
   <div class="row">
     <div class="col">
       <div class="card gc-grid">
-        <div class="card-header gc-grid__header">
-		</div>
+        <div class="card-header gc-grid__header">{{vm.generalInfo.grid.label}}</div>
         <div class="card-block gc-grid__body">
-			<make-grid [(vm)]="vm" (edit)="onEdit($event)" (details)="onDetails($event)" (print)="onPrint($event)" (deleteConfimation)="onDeleteConfimation($event)" (orderBy)="onOrderBy($event)"></make-grid>
+          <make-grid [(vm)]="vm" (edit)="onEdit($event)" (details)="onDetails($event)" (print)="onPrint($event)" (deleteConfimation)="onDeleteConfimation($event)" (orderBy)="onOrderBy($event)"></make-grid>
         </div>
         <div class="card-footer gc-grid__footer">
           <div class="gc-pagination">
@@ -84,18 +83,18 @@
       </div>
       <form (ngSubmit)="onSave(vm.model)" novalidate>
         <div class="modal-body">
-          <app-produto-container-create [(vm)]="vm"></app-produto-container-create>
+          <app-produto-field-create [(vm)]="vm"></app-produto-field-create>
         </div>
         <div class="modal-footer">
-          <button class="btn btn-default" type="button" (click)="onCancel()">{{vm.generalInfo.cancelar.label}}</button>
-          <button type="submit" class="btn btn-success" [disabled]="vm != null && vm.form.invalid" >{{vm.generalInfo.salvar.label}}</button>
-		  <section class="col-md-4">
+          <section class="col-md-4">
             <div class='checkbox'>
               <label>
                 <input type='checkbox' [(ngModel)]='vm.manterTelaAberta' name='manterTelaAberta' /> Manter Janela Aberta?
               </label>
             </div>
           </section>
+          <button class="btn btn-default" type="button" (click)="onCancel()">{{vm.generalInfo.cancelar.label}}</button>
+          <button type="submit" class="btn btn-success" [disabled]="vm != null && vm.form.invalid">{{vm.generalInfo.salvar.label}}</button>
         </div>
       </form>
     </div>
@@ -112,19 +111,19 @@
         </button>
       </div>
       <form (ngSubmit)="onSave(vm.model)" novalidate>
-		<div class="modal-body">
-			<app-produto-container-edit [(vm)]="vm"></app-produto-container-edit>
-		</div>
+        <div class="modal-body">
+          <app-produto-field-edit [(vm)]="vm"></app-produto-field-edit>
+        </div>
         <div class="modal-footer">
-          <button class="btn btn-default" type="button" (click)="onCancel()">{{vm.generalInfo.cancelar.label}}</button>
-          <button type="submit" class="btn btn-success" [disabled]="vm != null && vm.form.invalid">{{vm.generalInfo.salvar.label}}</button>
-		  <section class="col-md-4">
+          <section class="col-md-4">
             <div class='checkbox'>
               <label>
                 <input type='checkbox' [(ngModel)]='vm.manterTelaAberta' name='manterTelaAberta' /> Manter Janela Aberta?
               </label>
             </div>
           </section>
+          <button class="btn btn-default" type="button" (click)="onCancel()">{{vm.generalInfo.cancelar.label}}</button>
+          <button type="submit" class="btn btn-success" [disabled]="vm != null && vm.form.invalid">{{vm.generalInfo.salvar.label}}</button>
         </div>
       </form>
     </div>
@@ -135,14 +134,14 @@
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title pull-left">detalhes de {{ vm.actionTitle }}</h4>
+        <h4 class="modal-title pull-left">Detalhes de {{ vm.actionTitle }}</h4>
         <button type="button" class="close pull-right" aria-label="Close" (click)="onCancel()">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-	  <div class="modal-body">
-		<app-produto-container-details [(vm)]="vm"></app-produto-container-details>
-	  </div>
+      <div class="modal-body">
+        <app-produto-field-details [(vm)]="vm"></app-produto-field-details>
+      </div>
       <div class="modal-footer">
         <button class="btn btn-default" type="button" (click)="onCancel()">{{vm.generalInfo.cancelar.label}}</button>
       </div>

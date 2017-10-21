@@ -1,4 +1,4 @@
-﻿import { Component, OnInit, SecurityContext } from '@angular/core';
+import { Component, OnInit, SecurityContext } from '@angular/core';
 import { Router } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
 
@@ -20,7 +20,6 @@ export class MainComponent implements OnInit {
     filter: string;
 
     constructor(private authService: AuthService, private globalServiceCulture: GlobalServiceCulture, private mainService: MainService, private sanitizer: DomSanitizer, private router: Router) {
-
         this.vm = {};
         this.menuIsOpen = true;
         this.vm.generalInfo = this.mainService.getInfosFields();
@@ -39,11 +38,9 @@ export class MainComponent implements OnInit {
     }
 
     onUpdateCulture(event, culture: string) {
-
         event.preventDefault();
         this.mainService.updateCulture(this.vm, culture);
         GlobalService.getChangeCultureEmitter().emit(culture);
-
     }
 
     ngOnInit() {
@@ -71,17 +68,12 @@ export class MainComponent implements OnInit {
                     this.vm.typerole = result.claims.typerole
                     this.vm.userRole = this.vm.userRole + "- [" + this.vm.typerole + "]";
                 }
-
-                if (this.vm.typerole == "Team" && firstTime) {
-                    this.router.navigate(["/dashboard/timesheet"]);
-                }
-
+                
             }
         });
     }
 
     onToggleMenu() {
-
         this.menuIsOpen = !this.menuIsOpen
     }
 

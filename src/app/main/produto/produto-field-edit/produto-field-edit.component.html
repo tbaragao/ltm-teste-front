@@ -2,13 +2,13 @@
   <section class="col-md-12">
     <div class='form-group'>
       <label>{{ vm.infos.nome.label }}</label>
-      <input type='text' class='form-control' [(ngModel)]='vm.model.nome' name='nome' required formControlName='nome'  />
+      <input type='text' class='form-control' [(ngModel)]='vm.model.nome' name='nome' required formControlName='nome' />
     </div>
   </section>
   <section class="col-md-12">
     <div class='form-group'>
       <label>{{ vm.infos.descricao.label }}</label>
-      <textarea class='form-control'  [(ngModel)]='vm.model.descricao' name='descricao'  rows='10' formControlName='descricao' ></textarea>
+      <textarea class='form-control' [(ngModel)]='vm.model.descricao' name='descricao' rows='5' formControlName='descricao'></textarea>
     </div>
   </section>
   <section class="col-md-12">
@@ -26,7 +26,7 @@
   <section class="col-md-12">
     <div class='checkbox'>
       <label>
-          <input type='checkbox'  [(ngModel)]='vm.model.ativo'  name='ativo' formControlName='ativo' /> {{ vm.infos.ativo.label }}?
+        <input type='checkbox' [(ngModel)]='vm.model.ativo' name='ativo' formControlName='ativo' /> {{ vm.infos.ativo.label }}?
       </label>
     </div>
   </section>

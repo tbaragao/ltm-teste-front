@@ -1,4 +1,4 @@
-﻿import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Observable, Observer } from 'rxjs/Rx';
 import { Subject } from 'rxjs/Subject';
 import { FormGroup, FormControl } from '@angular/forms';
@@ -60,6 +60,7 @@ export class MainService extends ServiceBase {
             imprimir: { label: 'Imprimir' },
             procurar: { label: 'Procurar' },
             excluir: { label: 'Excluir' },
+            grid: { label: 'Resultados' },
         }
     }
 }

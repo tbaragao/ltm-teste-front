@@ -18,6 +18,7 @@ import { LoadingComponent } from './common/components/loading.component';
 import { MainService } from './main/main.service';
 import { GlobalServiceCulture } from './global.service.culture';
 import { StartupService } from './startup.service';
+import { AuthGuard } from "./app.guard.routing";
 
 export function startupServiceFactory(startupService: StartupService): Function {
     return () => startupService.load();
@@ -53,7 +54,8 @@ export function startupServiceFactory(startupService: StartupService): Function 
         AuthService,
         ApiService,
         MainService,
-        GlobalServiceCulture
+        GlobalServiceCulture,
+        AuthGuard
     ],
     bootstrap: [AppComponent]
 })

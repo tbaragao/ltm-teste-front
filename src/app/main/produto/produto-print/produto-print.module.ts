@@ -6,25 +6,22 @@ import { ProdutoPrintRoutingModule } from './produto-print.routing.module';
 
 import { ProdutoService } from '../produto.service';
 import { ApiService } from 'app/common/services/api.service';
-import { ProdutoServiceFields } from '../produto.service.fields';
 
-import { ProdutoContainerDetailsComponent } from '../produto-container-details/produto-container-details.component';
 import { ProdutoFieldDetailsComponent } from '../produto-field-details/produto-field-details.component';
 import { CommonSharedModule } from 'app/common/common-shared.module';
 
 @NgModule({
     imports: [
         CommonModule,
-		CommonSharedModule,
+        CommonSharedModule,
         ProdutoPrintRoutingModule,
     ],
     declarations: [
         ProdutoPrintComponent,
-        ProdutoContainerDetailsComponent,
-		ProdutoFieldDetailsComponent
+        ProdutoFieldDetailsComponent
     ],
-    providers: [ProdutoService, ApiService, ProdutoServiceFields],
-    exports: [ProdutoContainerDetailsComponent,ProdutoFieldDetailsComponent]
+    providers: [ProdutoService, ApiService],
+    exports: [ProdutoFieldDetailsComponent]
 })
 export class ProdutoPrintModule {
 
